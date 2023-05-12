@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*::before,
+*::after,
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+
+
+/*==================================================
+HEADER
+==================================================*/
+header {
+    display: flex;
+    justify-content: space-around;
+    grid-gap: 30px;
+    background: linear-gradient(#fff, #fff) padding-box,
+                linear-gradient(90deg, rgba(0,170,238,0) 0%, rgba(0,170,238,0.5) 50%, rgba(0,170,238,0) 100%) border-box;
+    padding: 30px;
+    border-bottom: 4px solid transparent;
+}
+
+header > input[type=submit],
+tr {
+    cursor: pointer;
+}
+
+header > * {
+    flex: 1 1 0;
+    background-color: #fff;
+    padding: 15px;
+    border: 2px solid #eee;
+    border-radius: 7px;
+}
+
+
+
+/*==================================================
+TABLE
+==================================================*/
+table {
+    background-color: #fff;
+    width: calc(100% - 60px);
+    margin: 30px;
+}
+
+
+table tr:nth-child(odd) {
+    background-color: #eee;
+}
+
+table td {
+    height:2rem;
+    min-width:0.5rem;
+    padding-left: 15px;
+}
+
+.deleteBtn {
+    position: absolute;
+    width: 1rem;
+    aspect-ratio: 1/1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+/*==================================================
+DIALOG
+==================================================*/
+dialog {
+    width: 75%;
+    height: 75%;
+    top: 50%;
+    left: 50%;
+    border: none;
+    border-radius: 15px;
+    padding: 30px;
+    transform: translate(-50%, -50%);
+}
+dialog::backdrop {
+    background-color: #00000058;
+}
+
+dialog > input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d1d1d1;
+    font-size: 1.25rem;
+    resize: none;
+}
+
+dialog > #cke_text {
+    margin-block: 1rem;
+}
+
+dialog footer {
+    display: flex;
+    justify-content: center;
+    grid-gap: 1rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+}
+
+dialog footer button {
+    border: 1px solid #d1d1d1;
+    border-radius: 3px;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
