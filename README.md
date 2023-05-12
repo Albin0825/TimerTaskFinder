@@ -22,17 +22,17 @@ This file will contain the settings needed to access your database.
 ```
 timertaskfinder
 ├ user
-│ ├ id       - int(11)
+│ ├ id       - int(11) | PRIMARY
 │ ├ username - varchar(255)
 │ └ password - varchar(255)
 ├ task
-│ ├ id          - int(11)
+│ ├ id          - int(11) | PRIMARY
 │ ├ title       - varchar(255)
 │ ├ description - longtext
 │ ├ updateDate  - datetime
 │ └ priority    - double
 └ report
-  ├ id          - int(11)
+  ├ id          - int(11) | PRIMARY
   ├ userID      - int(11)
   ├ taskID      - int(11)
   ├ time        - double
