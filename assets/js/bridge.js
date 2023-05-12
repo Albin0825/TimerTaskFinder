@@ -28,8 +28,8 @@ async function funsaveUpdate(inputID) {
 ==================================================**/
 async function funData(whatfun, id, title, description, updateDate, priority) {
     if(title && description) {
-        title       = await funSymbolsToHtml(title)
-        description = await funSymbolsToHtml(description)
+        title       = await funSymbolsToSwitch(title)
+        description = await funSymbolsToSwitch(description)
     }
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -77,8 +77,8 @@ async function funShowData() {
         $('table').children().append(`
             <tr data-id="${element.id}">
                 <td>${element.id}</td>
-                <td>${element.title}</td>
-                <td>${element.description.replace(/<\/?(p|ul|li)>/g, '').replace(/\n/g, '...')}</td>
+                <td>${funToSymbolsSwitch(element.title)}</td>
+                <td>${funToSymbolsSwitch(element.description.replace(/<\/?(p|ul|li)>/g, '').replace(/\n/g, '...'))}</td>
                 <td>${element.updateDate}</td>
                 <td style="position:relative;"><img src="${funBaseUrl()}assets/img/x.svg" alt="" class="deleteBtn"></td>
             </tr>
