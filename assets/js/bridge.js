@@ -10,7 +10,29 @@ async function funsaveUpdate(inputID) {
     const date = new Date();
     standardizedDate = date.toISOString() //formats date to YYYY-MM-DDTHH:mm:ss.sssZ
 
-    result = await funData(method, id, $('#title').val(), CKEDITOR.instances['description'].getData(), standardizedDate, $('#priority').val())
+    //positions  
+    let data = await funData('priority')
+    topPriority = parseInt(data[0].priority)
+    switch ($('#priority').val()) {
+        case 'top':
+            priority = topPriority + 10
+            break;
+        case 'high':
+            priority = topPriority / 4 * 3
+            break;
+        case 'medium':
+            priority = topPriority / 4 * 2
+            break;
+        case 'low':
+            priority = topPriority / 4 * 1
+            break;
+        default:
+            priority = 0
+            break;
+    }
+
+    //send or update data
+    result = await funData(method, id, $('#title').val(), CKEDITOR.instances['description'].getData(), standardizedDate, priority)
     if(result == false) {
         alert(`Failed to send.\n\nEther ${text} or it did not come through.`)
     }
@@ -22,8 +44,9 @@ async function funsaveUpdate(inputID) {
  * 
  * @param {Object} btn         - what btn you pressed on
  * @param {Number} id          - if you want to delete or update a element
- * @param {String} title       - if you want to add a element
- * @param {String} description - if you want to add a element
+ * @param {String} title       - if you want to add/update a element
+ * @param {String} description - if you want to add/update a element
+ * @param {Number} priority    - if you want to add/update a element
  * @returns {Boolean|Object}
 ==================================================**/
 async function funData(whatfun, id, title, description, updateDate, priority) {

@@ -8,7 +8,13 @@
 <dialog>
     <input type="text" id="title"></input>
     <textarea id="description"></textarea>
-    <input type="number" id="priority">
+    <select id="priority">
+        <option value="top">top</option>
+        <option value="high">high</option>
+        <option value="medium">medium</option>
+        <option value="low">low</option>
+        <option value="bottom">bottom</option>
+    </select>
     <footer>
         <button id="close">Close</button>
         <button id="saveAndClose">Save And Close</button>
