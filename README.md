@@ -29,6 +29,7 @@ timertaskfinder
 │ └ priority    - double
 └ Reports
   ├ id          - int(11)
+	├ time        - double
   ├ taskID      - int(11)
   └ description - longtext
 ```
