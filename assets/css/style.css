@@ -90,7 +90,8 @@ dialog::backdrop {
     background-color: #00000058;
 }
 
-dialog > input {
+dialog > input,
+dialog > select {
     width: 100%;
     padding: 0.5rem;
     border: 1px solid #d1d1d1;

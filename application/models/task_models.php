@@ -72,5 +72,19 @@
                 ", [$id]);
                 return ($this->db->affected_rows() > 0) ? true : false;
         }
+
+        public function priority() {
+                $result = $this->db->query("
+                        SELECT
+                                priority
+                        FROM
+                                task
+                        ORDER BY
+                                priority DESC
+                        LIMIT
+                                1
+                ");
+                return $result->result_array();
+        }
     }
 ?>
