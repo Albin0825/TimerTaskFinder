@@ -15,12 +15,12 @@ This file will contain the settings needed to access your database.
 'hostname' => 'localhost',
 'username' => 'root',
 'password' => '',
-'database' => 'TimerTaskFinder',
+'database' => 'timertaskfinder',
 ```
 
 # DB
 ```
-post
+task
 ├ id
 ├ title
 ├ text
