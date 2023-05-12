@@ -21,9 +21,9 @@ This file will contain the settings needed to access your database.
 # DB
 ```
 post
-L id
-L title
-L text
-L updateDate
-L priority
+├ id
+├ title
+├ text
+├ updateDate
+└ priority
 ```
