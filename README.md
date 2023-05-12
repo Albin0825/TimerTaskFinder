@@ -20,10 +20,11 @@ This file will contain the settings needed to access your database.
 
 # DB
 ```
-task
-├ id
-├ title
-├ text
-├ updateDate
-└ priority
+timertaskfinder
+└ task
+	├ id
+	├ title
+	├ text
+	├ updateDate
+	└ priority
 ```
