@@ -9,6 +9,15 @@ WARNING: You MUST set this value!
 $config['base_url'] = '';
 ```
 
+# database.php
+```
+This file will contain the settings needed to access your database.
+'hostname' => 'localhost',
+'username' => 'root',
+'password' => '',
+'database' => 'TimerTaskFinder',
+```
+
 # DB
 ```
 post
