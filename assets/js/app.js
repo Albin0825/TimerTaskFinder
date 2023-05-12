@@ -5,7 +5,7 @@ window.addEventListener("load", (event) => { //sends a request to get all posts 
 $('header input[type="submit"]').click(function(e) {
     e.preventDefault();
 
-    window.location.pathname = window.location.pathname + '/post'
+    window.location.pathname = `${funBaseUrl()}index.php/main_controllers/task`
 });
 
 $('body').on('click', 'td', async function(e) { //sends a request to show a post
@@ -18,8 +18,7 @@ $('body').on('click', 'td', async function(e) { //sends a request to show a post
         return;
     }
     
-    window.location.hash = parseInt($(this).parent().attr('data-id'))
-    window.location.replace(`${funBaseUrl()}index.php/main_controllers/post`)
+    window.location.replace(`${funBaseUrl()}index.php/main_controllers/task#${parseInt($(this).parent().attr('data-id'))}`)
 })
 
 
@@ -40,18 +39,19 @@ function funBaseUrl() {
 /**==================================================
  * 
  * @param {Object} btn   - what btn you pressed on
- * @param {Number} id    - if you want to delete a element
+ * @param {Number} id    - if you want to delete or update a element
  * @param {String} title - if you want to add a element
  * @param {String} text  - if you want to add a element
+ * @returns {Boolean|Object}
 ==================================================**/
 async function funData(whatfun, id, title, text, updateDate, priority) {
     if(title && text) {
-        title = await symbolsToHtml(title)
-        text  = await symbolsToHtml(text)
+        title = await funSymbolsToHtml(title)
+        text  = await funSymbolsToHtml(text)
     }
     return new Promise((resolve, reject) => {
         $.ajax({
-            url: `${funBaseUrl()}index.php/main_controllers/${whatfun}Posts`,
+            url: `${funBaseUrl()}index.php/main_controllers/${whatfun}Task`,
             type: 'POST',
             data: {
                 id:    id,
@@ -82,7 +82,6 @@ async function funData(whatfun, id, title, text, updateDate, priority) {
 
 /**==================================================
  * 
- * @param {Array} data - all the rows in the database
 ==================================================**/
 async function funShowData() {
     data = await funData('get')
@@ -112,7 +111,7 @@ async function funShowData() {
  * @param {String} input 
  * @returns {String}
 ==================================================**/
-function symbolsToHtml(input) {
+function funSymbolsToHtml(input) {
     return input.replace(/([\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1F1E0}-\u{1F1FF}])+/gu, (match) => {
         const entity = `&#${match.codePointAt(0)};`;
         return entity;
@@ -145,7 +144,7 @@ async function funsaveUpdate() {
  * @param {String} html 
  * @returns {String}
 ==================================================**/
-function decodeHtml(html) {
+function funDecodeHtml(html) {
     var textArea = document.createElement('textarea');
     textArea.innerHTML = html;
     return textArea.value;

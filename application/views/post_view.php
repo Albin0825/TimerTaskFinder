@@ -29,7 +29,7 @@
         document.querySelector('dialog').showModal()
         
         //editor title
-        $('#title').val(decodeHtml(title))
+        $('#title').val(funDecodeHtml(title))
 
         //editor text
         CKEDITOR.replace('text', {

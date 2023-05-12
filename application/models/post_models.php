@@ -1,6 +1,6 @@
 <?php
     class post_models extends CI_Model {   
-        public function getPost() {
+        public function getTask() {
                 $result = $this->db->query("
                         SELECT
                                 id,
@@ -8,7 +8,7 @@
                                 text,
                                 updateDate
                         FROM
-                                post
+                                task
                         ORDER BY
                                 priority DESC
                         LIMIT
@@ -17,7 +17,7 @@
                 return $result->result_array();
         }
         
-        public function getOnePost($id) {
+        public function getOneTask($id) {
                 $result = $this->db->query("
                         SELECT
                                 title,
@@ -25,16 +25,16 @@
                                 updateDate,
                                 priority
                         FROM
-                                post
+                                task
                         WHERE
                                 id = ?
                 ", [$id]);
                 return $result->result_array();
         }
 
-        public function insertPost($title, $text, $updateDate, $priority) {
+        public function insertTask($title, $text, $updateDate, $priority) {
                 $this->db->query("
-                        INSERT INTO post(
+                        INSERT INTO task(
                                 title,
                                 text,
                                 updateDate,
@@ -50,9 +50,9 @@
                 return ($this->db->affected_rows() > 0) ? true : false;
         }
         
-        public function updatePost($id, $title, $text, $updateDate, $priority) {
+        public function updateTask($id, $title, $text, $updateDate, $priority) {
                 $this->db->query("
-                        UPDATE post
+                        UPDATE task
                         SET
                                 title = ?,
                                 text = ?,
@@ -64,9 +64,9 @@
                 return ($this->db->affected_rows() > 0) ? true : false;
         }
         
-        public function deletePost($id) {
+        public function deleteTask($id) {
                 $this->db->query("
-                        DELETE FROM post
+                        DELETE FROM task
                         WHERE
                                 id = ?
                 ", [$id]);

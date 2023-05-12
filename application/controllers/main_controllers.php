@@ -16,50 +16,50 @@
 			return $data;
 		}
 
-		public function getPosts() {
+		public function getTask() {
 			$this->load->model('post_models');
-			$data = $this->post_models->getPost();
+			$data = $this->post_models->getTask();
 			
 			echo json_encode($data);
 		}
 
-		public function showPosts() {
+		public function showTask() {
 			$helperData = $this->helper();
 
 			$this->load->model('post_models');
-			$data = $this->post_models->getOnePost($helperData['id']);
+			$data = $this->post_models->getOneTask($helperData['id']);
 			
 			echo json_encode($data);
 		}
 
-		public function sendPosts() {
+		public function sendTask() {
 			$helperData = $this->helper();
 			
 			$this->load->model('post_models');
-			$data = $this->post_models->insertPost($helperData['title'], $helperData['text'], $helperData['updateDate'], $helperData['priority']);
+			$data = $this->post_models->insertTask($helperData['title'], $helperData['text'], $helperData['updateDate'], $helperData['priority']);
 			
 			echo json_encode($data);
 		}
 		
-		public function updatePosts() {
+		public function updateTask() {
 			$helperData = $this->helper();
 			
 			$this->load->model('post_models');
-			$data = $this->post_models->updatePost($helperData['id'], $helperData['title'], $helperData['text'], $helperData['updateDate'], $helperData['priority']);
+			$data = $this->post_models->updateTask($helperData['id'], $helperData['title'], $helperData['text'], $helperData['updateDate'], $helperData['priority']);
 			
 			echo json_encode($data);
 		}
 		
-		public function deletePosts() {
+		public function deleteTask() {
 			$helperData = $this->helper();
 
 			$this->load->model('post_models');
-			$data = $this->post_models->deletePost($helperData['id']);
+			$data = $this->post_models->deleteTask($helperData['id']);
 
 			echo json_encode($data);
 		}
 
-		public function post() {
+		public function task() {
 			$this->load->view('main_view');
 			$this->load->view('post_view');
 		}
