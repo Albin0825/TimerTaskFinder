@@ -22,9 +22,9 @@ This file will contain the settings needed to access your database.
 ```
 timertaskfinder
 └ task
-	├ id
-	├ title
-	├ text
-	├ updateDate
-	└ priority
+   ├ id
+   ├ title
+   ├ text
+   ├ updateDate
+   └ priority
 ```
