@@ -5,7 +5,7 @@ window.addEventListener("load", (event) => { //sends a request to get all posts 
 $('header input[type="submit"]').click(function(e) {
     e.preventDefault();
 
-    window.location.pathname = `${funBaseUrl()}index.php/main_controllers/task`
+    window.location.replace(`${funBaseUrl()}index.php/main_controllers/task`)
 });
 
 $('body').on('click', 'td', async function(e) { //sends a request to show a post

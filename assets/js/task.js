@@ -11,7 +11,7 @@ window.addEventListener("load", async (event) => {
     document.querySelector('dialog').showModal()
     
     //editor title
-    $('#title').val(funHtmlToSymbols(title))
+    $('#title').val(funToSymbolsSwitch(title))
 
     //editor description
     CKEDITOR.replace('description', {
@@ -21,7 +21,7 @@ window.addEventListener("load", async (event) => {
             { name: 'paragraph', groups: [ 'list', 'indent' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent' ] }
         ]
     });
-    CKEDITOR.instances['description'].setData(description);
+    CKEDITOR.instances['description'].setData(funToSymbolsSwitch(description));
 
     //editor priority
     $('#priority').val(priority)
