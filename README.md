@@ -6,7 +6,7 @@ Report how much time you have put on a task and what task that needs to be done 
 URL to your CodeIgniter root.
 http://example.com/
 WARNING: You MUST set this value!
-$config['base_url'] = '';
+$config['base_url'] = 'http://localhost:8080/prodjects/timertaskfinder';
 ```
 
 # database.php
