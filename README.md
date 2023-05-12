@@ -21,10 +21,14 @@ This file will contain the settings needed to access your database.
 # DB
 ```
 timertaskfinder
-└ task
+├ task
+│ ├ id
+│ ├ title
+│ ├ description
+│ ├ updateDate
+│ └ priority
+└ Reports
   ├ id
-  ├ title
-  ├ text
-  ├ updateDate
-  └ priority
+	├ taskID
+	└ description
 ```
