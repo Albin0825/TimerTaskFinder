@@ -1,11 +1,11 @@
 <?php
-    class post_models extends CI_Model {   
+    class task_models extends CI_Model {   
         public function getTask() {
                 $result = $this->db->query("
                         SELECT
                                 id,
                                 title,
-                                text,
+                                description,
                                 updateDate
                         FROM
                                 task
@@ -21,7 +21,7 @@
                 $result = $this->db->query("
                         SELECT
                                 title,
-                                text,
+                                description,
                                 updateDate,
                                 priority
                         FROM
@@ -32,11 +32,11 @@
                 return $result->result_array();
         }
 
-        public function insertTask($title, $text, $updateDate, $priority) {
+        public function insertTask($title, $description, $updateDate, $priority) {
                 $this->db->query("
                         INSERT INTO task(
                                 title,
-                                text,
+                                description,
                                 updateDate,
                                 priority
                         )
@@ -46,21 +46,21 @@
                                 ?,
                                 ?
                         )
-                ", [$title, $text, $updateDate, $priority]);
+                ", [$title, $description, $updateDate, $priority]);
                 return ($this->db->affected_rows() > 0) ? true : false;
         }
         
-        public function updateTask($id, $title, $text, $updateDate, $priority) {
+        public function updateTask($id, $title, $description, $updateDate, $priority) {
                 $this->db->query("
                         UPDATE task
                         SET
                                 title = ?,
-                                text = ?,
+                                description = ?,
                                 updateDate = ?,
                                 priority = ?
                         WHERE
                                 id = ?
-                ", [$title, $text, $updateDate, $priority, $id]);
+                ", [$title, $description, $updateDate, $priority, $id]);
                 return ($this->db->affected_rows() > 0) ? true : false;
         }
         
