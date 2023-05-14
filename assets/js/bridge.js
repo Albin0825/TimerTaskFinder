@@ -56,7 +56,7 @@ async function funData(whatfun, id, title, description, updateDate, priority) {
     }
     return new Promise((resolve, reject) => {
         $.ajax({
-            url: `${funBaseUrl()}index.php/main_controllers/${whatfun}Task`,
+            url: `${funBaseUrl()}${whatfun}Task`,
             type: 'POST',
             data: {
                 id          : id,
@@ -103,7 +103,7 @@ async function funShowData() {
                 <td>${funToSymbolsSwitch(element.title)}</td>
                 <td>${funToSymbolsSwitch(element.description.replace(/<\/?(p|ul|li)>/g, '').replace(/\n/g, '...'))}</td>
                 <td>${element.updateDate}</td>
-                <td style="position:relative;"><img src="${funBaseUrl()}assets/img/x.svg" alt="" class="deleteBtn"></td>
+                <td style="position:relative;"><img src="${funBaseUrl(true)}assets/img/x.svg" alt="" class="deleteBtn"></td>
             </tr>
         `)
     });

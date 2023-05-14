@@ -3,10 +3,12 @@
 	
 	class main_controllers extends CI_Controller {
 		public function index() {
+			$this->load->view('header_view');
 			$this->load->view('main_view');
 		}
 		
 		public function task() {
+			$this->load->view('header_view');
 			$this->load->view('main_view');
 			$this->load->view('task_view');
 		}

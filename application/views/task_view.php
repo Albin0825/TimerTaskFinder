@@ -1,6 +1,5 @@
 <head>
 	<meta charset="utf-8">
-	<title>Main | Codeigniter</title>
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="//cdn.ckeditor.com/4.21.0/full/ckeditor.js"></script>
