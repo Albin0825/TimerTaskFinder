@@ -2,11 +2,10 @@
  * 
  * @returns {String}
 ==================================================**/
-function funBaseUrl() {
-    segment = 'index.php'
-    pathArray = window.location.pathname.split( '/' )
-    indexOfSegment = pathArray.lastIndexOf(segment)
-    return window.location.origin + pathArray.slice(0,indexOfSegment).join('/') + '/'
+function funBaseUrl(assets) {
+    urlArray = window.location.pathname.split( '/' )
+    indexOfSegment = urlArray.indexOf('index.php')+1
+    return window.location.origin + urlArray.slice(0, indexOfSegment + (!assets ? 1 : -1)).join('/') + '/'
 }
 
 
