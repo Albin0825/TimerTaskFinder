@@ -31,13 +31,10 @@ timertaskfinder
 │ ├ taskID      - int(11)
 │ ├ time        - double
 │ └ description - longtext
-├ task
-│ ├ id          - int(11) | PRIMARY
-│ ├ title       - varchar(255)
-│ ├ description - longtext
-│ ├ updateDate  - datetime
-│ └ priority    - double
-└ taskPriority
+└ task
   ├ id          - int(11) | PRIMARY
-  └ name        - varchar(255)
+  ├ title       - varchar(255)
+  ├ description - longtext
+  ├ updateDate  - datetime
+  └ priority    - double
 ```
