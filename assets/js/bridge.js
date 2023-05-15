@@ -47,7 +47,7 @@ async function funsaveUpdate(inputID) {
  * @param {String} title       - if you want to add/update a element
  * @param {String} description - if you want to add/update a element
  * @param {Number} priority    - if you want to add/update a element
- * @returns {Boolean|Object}
+ * @returns {Boolean|Object}   - boolean: insert, update and delete. object: select.
 ==================================================**/
 async function funData(whatfun, id, title, description, updateDate, priority) {
     if(title && description) {
@@ -67,6 +67,9 @@ async function funData(whatfun, id, title, description, updateDate, priority) {
             },
             success: function (data) {
                 if(typeof JSON.parse(data) == 'boolean') {
+                    if(JSON.parse(data) == true) {
+                        funShowData()
+                    }
                     resolve(JSON.parse(data))
                 } else if(typeof JSON.parse(data) == 'object') {
                     resolve(JSON.parse(data))

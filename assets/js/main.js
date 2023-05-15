@@ -5,10 +5,7 @@ window.addEventListener("load", async (event) => { //sends a request to get all 
 $('body').on('click', 'td', async function(e) { //sends a request to show a post
     //does not show the post and sends a request to remove the post
     if($(e.target).hasClass('deleteBtn')) {
-        result = await funData('delete', parseInt($(this).parent().attr('data-id')))
-        if(result) {
-            funShowData()
-        }
+        await funData('delete', parseInt($(this).parent().attr('data-id')))
         return;
     }
     
