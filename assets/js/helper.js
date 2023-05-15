@@ -5,6 +5,12 @@
 function funBaseUrl(assets) {
     urlArray = window.location.pathname.split( '/' )
     indexOfSegment = urlArray.indexOf('index.php')+1
+
+    //if you are not in a controller it forces you into a controller
+    if(urlArray[urlArray.indexOf('index.php')+1] == '') {
+        window.location.replace(window.location.origin + urlArray.slice(0, urlArray.indexOf('timertaskfinder')+1).join('/') + '/' + 'index.php/main_controllers')
+    }
+
     return window.location.origin + urlArray.slice(0, indexOfSegment + (!assets ? 1 : -1)).join('/') + '/'
 }
 
