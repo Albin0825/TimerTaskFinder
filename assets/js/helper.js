@@ -16,26 +16,30 @@ function funBaseUrl(assets) {
  * @returns {String}
 ==================================================**/
 function funSymbolsToSwitch(input) {
-    converterType = 'Html'
+    converterType = 'Html' // 'Html' / 'Unicode' / ''
     result = ''
 
     if(converterType == 'Html') {
         result = funSymbolsToHtml(input)
-    } else {
+    } else if(converterType == 'Unicode') {
         result = funSymbolsToUnicode(input)
+    } else {
+        return input
     }
 
     return result
 }
 
 function funToSymbolsSwitch(input) {
-    converterType = 'Html'
+    converterType = 'Html' // 'Html' / 'Unicode' / ''
     result = ''
 
     if(converterType == 'Html') {
         result = funHtmlToSymbols(input)
-    } else {
+    } else if(converterType == 'Unicode') {
         result = funUnicodeToSymbols(input)
+    } else {
+        return input
     }
 
     return result

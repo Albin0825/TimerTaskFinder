@@ -1,4 +1,4 @@
-window.addEventListener("load", (event) => { //sends a request to get all posts on load
+window.addEventListener("load", async (event) => { //sends a request to get all posts on load
     funShowData()
 });
 
@@ -12,5 +12,5 @@ $('body').on('click', 'td', async function(e) { //sends a request to show a post
         return;
     }
     
-    window.location.replace(`${funBaseUrl()}index.php/main_controllers/task#${parseInt($(this).parent().attr('data-id'))}`)
+    window.location.replace(`${await funBaseUrl()}task#${parseInt($(this).parent().attr('data-id'))}`)
 })
