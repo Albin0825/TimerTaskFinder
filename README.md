@@ -19,7 +19,7 @@ $config['base_url'] = 'http://localhost:8080/projects/timertaskfinder';
 ```
 
 # DB
-```
+```sql
 timertaskfinder
 ├ user
 │ ├ id          - int(11) | PRIMARY
@@ -29,23 +29,19 @@ timertaskfinder
 │ ├ id          - int(11) | PRIMARY
 │ ├ userID      - int(11)
 │ └ projectID   - int(11)
-├ project
-│ ├ id          - int(11) | PRIMARY
-│ ├ title       - varchar(255)
-│ ├ description - longtext
-│ └ time        - double
 ├ projectTask
 │ ├ id          - int(11) | PRIMARY
 │ ├ projectID   - int(11)
 │ └ taskID      - int(11)
-├ task
+├ task --task and project is the same table
 │ ├ id          - int(11) | PRIMARY
 │ ├ title       - varchar(255)
 │ ├ description - longtext
 │ ├ ETA         - double
 │ ├ time        - double
 │ ├ updateDate  - datetime
-│ └ priority    - double
+│ ├ priority    - double
+│ └ module      - varchar(255)
 └ report
   ├ id          - int(11) | PRIMARY
   ├ userID      - int(11)
