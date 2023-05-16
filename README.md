@@ -20,6 +20,9 @@ $config['base_url'] = 'http://localhost:8080/projects/timertaskfinder';
 
 # DB
 ```sql
+--
+-- all the tables are not in use in the current build
+--
 timertaskfinder
 ├ user
 │ ├ id          -- int(11) | PRIMARY
