@@ -15,6 +15,7 @@
         <option value="bottom">bottom</option>
     </select>
     <footer>
+        <button id="delete">Delete</button>
         <button id="close">Close</button>
         <button id="saveAndClose">Save And Close</button>
         <button id="save">Save</button>

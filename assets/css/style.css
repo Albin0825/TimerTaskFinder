@@ -3,13 +3,10 @@
 *::before,
 *::after,
 * {
+    font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
 }
 
 
@@ -90,15 +87,6 @@ table td {
     padding-left: 15px;
 }
 
-.deleteBtn {
-    position: absolute;
-    width: 1rem;
-    aspect-ratio: 1/1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 
 
 /*==================================================
@@ -146,4 +134,10 @@ dialog footer button {
     border: 1px solid #d1d1d1;
     border-radius: 3px;
     padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+dialog footer #delete {
+    position: absolute;
+    background: #FF3B30;
+    left: 30px;
 }

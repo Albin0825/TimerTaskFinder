@@ -12,9 +12,10 @@
 		<tr>
 			<th>ID</th>
 			<th>Title</th>
-			<th>description</th>
-			<th>updateDate</th>
-			<th></th>
+			<th>Description</th>
+			<th>ETA</th>
+			<th>Time</th>
+			<th>UpdateDate</th>
 		</tr>
 	</table>
 	<script src="<?= base_url() ?>assets/js/main.js"></script>

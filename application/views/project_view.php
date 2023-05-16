@@ -10,11 +10,12 @@
 <body>
 	<table>
 		<tr>
-			<th>CustomerID</th>
-			<th>ProjectID</th>
-			<th>TaskID</th>
-			<th>Time</th>
+			<th>ID</th>
+			<th>Title</th>
 			<th>Description</th>
+			<th>ETA</th>
+			<th>Time</th>
+			<th>UpdateDate</th>
 		</tr>
 	</table>
 	<script src="<?= base_url() ?>assets/js/bridge.js"></script>

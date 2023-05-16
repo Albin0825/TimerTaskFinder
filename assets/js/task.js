@@ -1,12 +1,15 @@
 window.addEventListener("load", async (event) => {
-    id    = parseInt(window.location.hash.substr(1, window.location.hash.length))
-    title = ''
-    description  = ''
+    id          = await parseInt(getHashQuery('id'))
+    title       = ''
+    description = ''
     if(!isNaN(id)) {
-        data        = await funData('show', id)
-        title       = data[0].title
-        description = data[0].description
-        priority    = data[0].priority
+        data        = (await funData('show', id))[0]
+        title       = data.title
+        description = data.description
+        priority    = data.priority
+    } else {
+        $('#saveAndClose').text('Create And Close')
+        $('#save').text('Create')
     }
     document.querySelector('dialog').showModal()
     
@@ -27,11 +30,35 @@ window.addEventListener("load", async (event) => {
     $('#priority').val(priority)
 });
 
-$('dialog button#close, dialog button#saveAndClose').click(function() {
-    window.location.hash = '!'
-    window.location.pathname = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/'))
+
+
+/**==================================================
+ * Buttons
+==================================================**/
+$('dialog button#delete').click(async function() {
+	CloseResult(await funData('delete', id))
 })
 
-$('dialog button#save, dialog button#saveAndClose').click(function() {
-    funsaveUpdate(id)
+$('dialog button#close').click(function() {
+	CloseResult(true)
 })
+
+$('dialog button#saveAndClose').click(async function() {
+	CloseResult(await funsaveUpdate(id))
+})
+
+$('dialog button#save').click(function() {
+	funsaveUpdate(id)
+})
+
+
+
+/**==================================================
+ * Buttons
+ * @param {Boolean} result - if the save/creation of the task/project did go through
+==================================================**/
+async function CloseResult(result) {
+	if(result) {
+        window.location.replace(await funBaseUrl())
+    }
+}

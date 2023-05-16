@@ -19,7 +19,10 @@
                     <a href="<?= base_url() ?>index.php/main_controllers/task">+</a>
                 </li>
                 <li>
-                    <a href="<?= base_url() ?>index.php/">Accounts (comming soon)</a>
+                    <a href="<?= base_url() ?>index.php/project_controllers/">Project</a>
+                </li>
+                <li>
+                    <a href="<?= base_url() ?>index.php/user_controllers/">Accounts (comming soon)</a>
                 </li>
             </ul>
         </nav>

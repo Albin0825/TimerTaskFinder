@@ -18,6 +18,17 @@ function funBaseUrl(assets) {
 
 /**==================================================
  * 
+ * @param {String} name - witch part of the hash you want to get
+ * @returns {String}
+==================================================**/
+function getHashQuery(name) {
+    return new URLSearchParams(window.location.hash.slice(1)).get(name)
+}
+
+
+
+/**==================================================
+ * 
  * @param {String} input 
  * @returns {String}
 ==================================================**/

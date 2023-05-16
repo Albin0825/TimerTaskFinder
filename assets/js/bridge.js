@@ -1,6 +1,7 @@
 /**==================================================
  * 
  * @param {number} inputID - what task you are on
+ * @returns {Boolean}
 ==================================================**/
 async function funsaveUpdate(inputID) {
     method = isNaN(inputID) ? 'send'                              : 'update'
@@ -36,6 +37,7 @@ async function funsaveUpdate(inputID) {
     if(result == false) {
         alert(`Failed to send.\n\nEther ${text} or it did not come through.`)
     }
+	return result
 }
 
 
@@ -105,8 +107,9 @@ async function funShowData() {
                 <td>${element.id}</td>
                 <td>${funToSymbolsSwitch(element.title)}</td>
                 <td>${funToSymbolsSwitch(element.description.replace(/<\/?(p|ul|li)>/g, '').replace(/\n/g, '...'))}</td>
+                <td>${element.eta}</td>
+                <td>${element.time}</td>
                 <td>${element.updateDate}</td>
-                <td style="position:relative;"><img src="${funBaseUrl(true)}assets/img/x.svg" alt="" class="deleteBtn"></td>
             </tr>
         `)
     });
