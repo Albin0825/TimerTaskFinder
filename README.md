@@ -44,7 +44,6 @@ timertaskfinder
 │ ├ time        -- double
 │ ├ updateDate  -- datetime
 │ ├ priority    -- double
-│ └ module      -- varchar(255)
 └ report
   ├ id          -- int(11) | PRIMARY
   ├ userID      -- int(11)
