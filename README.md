@@ -25,16 +25,31 @@ timertaskfinder
 │ ├ id          - int(11) | PRIMARY
 │ ├ username    - varchar(255)
 │ └ password    - varchar(255)
-├ report
+├ userProject
 │ ├ id          - int(11) | PRIMARY
 │ ├ userID      - int(11)
-│ ├ taskID      - int(11)
+│ └ projectID   - int(11)
+├ project
+│ ├ id          - int(11) | PRIMARY
+│ ├ title       - varchar(255)
+│ ├ description - longtext
+│ └ time        - double
+├ projectTask
+│ ├ id          - int(11) | PRIMARY
+│ ├ projectID   - int(11)
+│ └ taskID      - int(11)
+├ task
+│ ├ id          - int(11) | PRIMARY
+│ ├ title       - varchar(255)
+│ ├ description - longtext
+│ ├ ETA         - double
 │ ├ time        - double
-│ └ description - longtext
-└ task
+│ ├ updateDate  - datetime
+│ └ priority    - double
+└ report
   ├ id          - int(11) | PRIMARY
-  ├ title       - varchar(255)
-  ├ description - longtext
-  ├ updateDate  - datetime
-  └ priority    - double
+  ├ userID      - int(11)
+  ├ taskID      - int(11)
+  ├ time        - double
+  └ description - longtext
 ```
