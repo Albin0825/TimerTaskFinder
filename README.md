@@ -40,7 +40,7 @@ timertaskfinder
 │ ├ id          -- int(11) | PRIMARY
 │ ├ title       -- varchar(255)
 │ ├ description -- longtext
-│ ├ ETA         -- double
+│ ├ eta         -- double
 │ ├ time        -- double
 │ ├ updateDate  -- datetime
 │ ├ priority    -- double
