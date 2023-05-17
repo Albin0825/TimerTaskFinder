@@ -43,7 +43,7 @@ timertaskfinder
 │ ├ eta         -- double
 │ ├ time        -- double
 │ ├ updateDate  -- datetime
-│ ├ priority    -- double
+│ └ priority    -- double
 └ report
   ├ id          -- int(11) | PRIMARY
   ├ userID      -- int(11)
