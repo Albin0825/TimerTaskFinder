@@ -41,9 +41,9 @@ timertaskfinder
 │ ├ title       -- varchar(255)
 │ ├ description -- longtext
 │ ├ eta         -- double
-│ ├ time        -- double
+│ ├ time        -- double  | NULL
 │ ├ updateDate  -- datetime
-│ └ priority    -- double
+│ └ priority    -- double  | NULL
 └ report
   ├ id          -- int(11) | PRIMARY
   ├ userID      -- int(11)
