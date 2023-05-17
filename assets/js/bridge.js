@@ -4,14 +4,13 @@
  * @returns {Boolean}
 ==================================================**/
 async function funsaveUpdate(inputID) {
-    method = isNaN(inputID) ? 'send'                              : 'update'
-    id     = isNaN(inputID) ?  null                               :  inputID
+    method = isNaN(inputID) ? 'insert'                            : 'update'
     text   = isNaN(inputID) ? 'title, text and priority is empty' : 'you did not change anything'
 
     const date = new Date();
     standardizedDate = date.toISOString() //formats date to YYYY-MM-DDTHH:mm:ss.sssZ
 
-    //positions  
+    //positions
     let data = await funData('priority')
     topPriority = parseInt(data[0].priority)
     switch ($('#priority').val()) {
@@ -33,7 +32,22 @@ async function funsaveUpdate(inputID) {
     }
 
     //send or update data
-    result = await funData(method, id, $('#title').val(), CKEDITOR.instances['description'].getData(), standardizedDate, priority)
+
+	//request
+	//* if update {
+	//      ID
+	//* }
+	// title
+	// description
+	// eta
+	// time
+	// updateDate
+	// priority
+	//* if insert {
+	//      moduleID
+	//      secModuleID
+	//* }
+    result = await funData(method, inputID, $('#title').val(), CKEDITOR.instances['description'].getData(), standardizedDate, priority)
     if(result == false) {
         alert(`Failed to send.\n\nEther ${text} or it did not come through.`)
     }
@@ -45,25 +59,34 @@ async function funsaveUpdate(inputID) {
 /**==================================================
  * 
  * @param {Object} btn         - what btn you pressed on
- * @param {Number} id          - if you want to delete or update a element
- * @param {String} title       - if you want to add/update a element
- * @param {String} description - if you want to add/update a element
- * @param {Number} priority    - if you want to add/update a element
+ * @param {String} moduleID    - taskID or projectID
+ * @param {String} secModuleID - projectID or userID
+ * @param {Number} id          - used if you want to get one/update/delete a task
+ * @param {String} title       - ┐
+ * @param {String} description - ┤
+ * @param {String} eta         - ┤
+ * @param {String} time        - ┤
+ * @param {Number} updateDate  - ┤
+ * @param {Number} priority    - ┴ used if you want to insert/update a task
  * @returns {Boolean|Object}   - boolean: insert, update and delete. object: select.
 ==================================================**/
-async function funData(whatfun, id, title, description, updateDate, priority) {
+async function funData(whatfun, moduleID, secModuleID, id, title, description, eta, time, updateDate, priority) {
     if(title && description) {
         title       = await funSymbolsToSwitch(title)
         description = await funSymbolsToSwitch(description)
     }
     return new Promise((resolve, reject) => {
         $.ajax({
-            url: `${funBaseUrl()}${whatfun}Task`,
+            url: `${funBaseUrl()}${whatfun}`,
             type: 'POST',
             data: {
+                moduleID    : moduleID,
+                secModuleID : secModuleID,
                 id          : id,
                 title       : title,
                 description : description,
+                eta         : eta,
+                time        : time,
                 updateDate  : updateDate,
                 priority    : priority
             },

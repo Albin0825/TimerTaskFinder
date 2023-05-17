@@ -17,6 +17,7 @@
 			<th>Description</th>
 		</tr>
 	</table>
+	<script src="<?= base_url() ?>assets/js/main.js"></script>
 	<script src="<?= base_url() ?>assets/js/bridge.js"></script>
 	<script src="<?= base_url() ?>assets/js/helper.js"></script>
 </body>

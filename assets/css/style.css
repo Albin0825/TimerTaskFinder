@@ -106,16 +106,68 @@ dialog::backdrop {
     background-color: #00000058;
 }
 
-dialog > input,
-dialog > select {
-    width: 100%;
+dialog .wrapper {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	grid-template-rows: auto;
+	grid-gap: 15px;
+	grid-template-areas:
+    "customerID customerID customerID projectID projectID projectID"
+    "title title title title progressBar timeReportBtn"
+    "description description description description description description"
+	"priority priority priority priority priority priority";
+}
+
+#customerID {
+	grid-area: customerID;
+}
+#projectID {
+	grid-area: projectID;
+}
+#title {
+	grid-area: title;
+}
+#progressBar {
+	grid-area: progressBar;
+	display: flex;
+	position: relative;
+	border: 1px solid #d1d1d1;
+}
+#progressBar::before {
+	position: absolute;
+	content: '';
+	background: #30DB5B;
+	width: 50%;
+	height: 100%;
+}
+#progressBar * {
+	background: transparent;
+	border: none;
+	z-index: 100;
+}
+#progressBar #eta {
+	text-align: end;
+}
+#timeReportBtn {
+	grid-area: timeReportBtn;
+}
+#cke_description {
+	grid-area: description;
+}
+#priority {
+	grid-area: priority;
+}
+
+dialog input,
+dialog select {
+	width: 100%;
     padding: 0.5rem;
     border: 1px solid #d1d1d1;
     font-size: 1.25rem;
     resize: none;
 }
 
-dialog > #cke_text {
+dialog #cke_text {
     margin-block: 1rem;
 }
 
@@ -138,6 +190,6 @@ dialog footer button {
 
 dialog footer #delete {
     position: absolute;
-    background: #FF3B30;
+    background: #FF6861;
     left: 30px;
 }

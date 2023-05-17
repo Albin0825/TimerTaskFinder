@@ -14,12 +14,17 @@
 		}
 
 		function helper() {
-			$this->load->model('task_models');
+			$this->load->model('projectTask_models');
 
 			$data = [];
+			$data['module']      = 'task';
+			$data['moduleID']    = !empty($_POST['moduleID'])    ? $_POST['moduleID']    : null;
+			$data['secModuleID'] = !empty($_POST['secModuleID']) ? $_POST['secModuleID'] : null;
 			$data['id']          = !empty($_POST['id'])          ? $_POST['id']          : null;
 			$data['title']       = !empty($_POST['title'])       ? $_POST['title']       : null;
 			$data['description'] = !empty($_POST['description']) ? $_POST['description'] : null;
+			$data['eta']         = !empty($_POST['eta'])         ? $_POST['eta']         : null;
+			$data['time']        = !empty($_POST['time'])        ? $_POST['time']        : null;
 			$data['updateDate']  = !empty($_POST['updateDate'])  ? $_POST['updateDate']  : null;
 			$data['priority']    = !empty($_POST['priority'])    ? $_POST['priority']    : null;
 			return $data;
@@ -28,9 +33,11 @@
 		/**==================================================
 		 * getTask
 		==================================================**/
-		public function getTask() {
+		public function get() {
 			$helperData = $this->helper();
-			$data = $this->task_models->getTask();
+			$data = $this->projectTask_models->get(
+				$helperData['module']
+			);
 			
 			echo json_encode($data);
 		}
@@ -38,9 +45,11 @@
 		/**==================================================
 		 * showTask
 		==================================================**/
-		public function showTask() {
+		public function getOne() {
 			$helperData = $this->helper();
-			$data = $this->task_models->getOneTask($helperData['id']);
+			$data = $this->projectTask_models->getOne(
+				$helperData['id']
+			);
 			
 			echo json_encode($data);
 		}
@@ -48,9 +57,19 @@
 		/**==================================================
 		 * sendTask
 		==================================================**/
-		public function sendTask() {
+		public function insert() {
 			$helperData = $this->helper();
-			$data = $this->task_models->insertTask($helperData['title'], $helperData['description'], $helperData['updateDate'], $helperData['priority']);
+			$data = $this->projectTask_models->insert(
+				$helperData['module'],
+				$helperData['title'],
+				$helperData['description'],
+				$helperData['eta'],
+				$helperData['time'],
+				$helperData['updateDate'],
+				$helperData['priority'],
+				$helperData['moduleID'],
+				$helperData['secModuleID']
+			);
 			
 			echo json_encode($data);
 		}
@@ -58,9 +77,17 @@
 		/**==================================================
 		 * updateTask
 		==================================================**/
-		public function updateTask() {
+		public function update() {
 			$helperData = $this->helper();
-			$data = $this->task_models->updateTask($helperData['id'], $helperData['title'], $helperData['description'], $helperData['updateDate'], $helperData['priority']);
+			$data = $this->projectTask_models->update(
+				$helperData['id'],
+				$helperData['title'],
+				$helperData['description'],
+				$helperData['eta'],
+				$helperData['time'],
+				$helperData['updateDate'],
+				$helperData['priority']
+			);
 			
 			echo json_encode($data);
 		}
@@ -68,9 +95,13 @@
 		/**==================================================
 		 * deleteTask
 		==================================================**/
-		public function deleteTask() {
+		public function delete() {
 			$helperData = $this->helper();
-			$data = $this->task_models->deleteTask($helperData['id']);
+			$data = $this->projectTask_models->delete(
+				$helperData['module'],
+				$helperData['moduleID'],
+				$helperData['id']
+			);
 
 			echo json_encode($data);
 		}
@@ -78,9 +109,11 @@
 		/**==================================================
 		 * priority
 		==================================================**/
-		public function priorityTask() {
+		public function priority() {
 			$helperData = $this->helper();
-			$data = $this->task_models->priority();
+			$data = $this->projectTask_models->priority(
+				$helperData['module']
+			);
 
 			echo json_encode($data);
 		}

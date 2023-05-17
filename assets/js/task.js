@@ -3,14 +3,22 @@ window.addEventListener("load", async (event) => {
     title       = ''
     description = ''
     if(!isNaN(id)) {
-        data        = (await funData('show', id))[0]
+        data        = (await funData('getOne', null, null, id))[0]
         title       = data.title
         description = data.description
+        eta         = data.eta
+        time        = data.time
         priority    = data.priority
     } else {
         $('#saveAndClose').text('Create And Close')
         $('#save').text('Create')
     }
+
+	if(await funBaseUrl().split('/')[6] == 'project_controllers') {
+		$('#projectID').prop('disabled', 'true')
+		$('#projectID').css('filter', 'brightness(0.75)')
+	}
+
     document.querySelector('dialog').showModal()
     
     //editor title
@@ -26,7 +34,13 @@ window.addEventListener("load", async (event) => {
     });
     CKEDITOR.instances['description'].setData(funToSymbolsSwitch(description));
 
-    //editor priority
+    //time priority
+    $('#time').val(time)
+
+    //eta priority
+    $('#eta').val(eta)
+    
+	//editor priority
     $('#priority').val(priority)
 });
 
