@@ -4,15 +4,15 @@
  * @returns {Boolean}
 ==================================================**/
 async function funsaveUpdate(inputID) {
-    method = isNaN(inputID) ? 'insert'                            : 'update'
+	method = isNaN(inputID) ? 'insert'                            : 'update'
     text   = isNaN(inputID) ? 'title, text and priority is empty' : 'you did not change anything'
-
+	
     const date = new Date();
     standardizedDate = date.toISOString() //formats date to YYYY-MM-DDTHH:mm:ss.sssZ
-
+	
     //positions
-    let data = await funData('priority')
-    topPriority = parseInt(data[0].priority)
+    var data = (await funData('priority'))[0]
+    topPriority = parseInt(data.priority) + (parseInt(data.priority) == 0 ? 10 : 0)
     switch ($('#priority').val()) {
         case 'top':
             priority = topPriority + 10
@@ -31,23 +31,19 @@ async function funsaveUpdate(inputID) {
             break;
     }
 
+	if(await funBaseUrl().split('/').find(element => element.includes('controllers')) == 'project_controllers') {
+		connectionType = 'verifyUser';
+	} else {
+		connectionType = 'getOne';
+	}
+	connection = await funData(connectionType, null, $('#connection').val())
+	if(connection == false) {
+		return false
+	}
+	moduleID = parseInt($('#connection').val())  // project: userID | task: projectID
+	
     //send or update data
-
-	//request
-	//* if update {
-	//      ID
-	//* }
-	// title
-	// description
-	// eta
-	// time
-	// updateDate
-	// priority
-	//* if insert {
-	//      moduleID
-	//      secModuleID
-	//* }
-    result = await funData(method, inputID, $('#title').val(), CKEDITOR.instances['description'].getData(), standardizedDate, priority)
+    result = await funData(method, moduleID, inputID, $('#title').val(), CKEDITOR.instances['description'].getData(), $('#eta').val(), $('#time').val(), standardizedDate, priority)
     if(result == false) {
         alert(`Failed to send.\n\nEther ${text} or it did not come through.`)
     }
@@ -58,9 +54,8 @@ async function funsaveUpdate(inputID) {
 
 /**==================================================
  * 
- * @param {Object} btn         - what btn you pressed on
- * @param {String} moduleID    - taskID or projectID
- * @param {String} secModuleID - projectID or userID
+ * @param {Object} whatfun     - witch function you want to go to for example, get, getOne, insert
+ * @param {String} moduleID    - userID or projectID
  * @param {Number} id          - used if you want to get one/update/delete a task
  * @param {String} title       - ┐
  * @param {String} description - ┤
@@ -70,7 +65,8 @@ async function funsaveUpdate(inputID) {
  * @param {Number} priority    - ┴ used if you want to insert/update a task
  * @returns {Boolean|Object}   - boolean: insert, update and delete. object: select.
 ==================================================**/
-async function funData(whatfun, moduleID, secModuleID, id, title, description, eta, time, updateDate, priority) {
+async function funData(whatfun, moduleID, id, title, description, eta, time, updateDate, priority) {
+	module = await funBaseUrl().split('/').find(element => element.includes('controllers')).split('_')[0]
     if(title && description) {
         title       = await funSymbolsToSwitch(title)
         description = await funSymbolsToSwitch(description)
@@ -80,8 +76,8 @@ async function funData(whatfun, moduleID, secModuleID, id, title, description, e
             url: `${funBaseUrl()}${whatfun}`,
             type: 'POST',
             data: {
+				module      : module,
                 moduleID    : moduleID,
-                secModuleID : secModuleID,
                 id          : id,
                 title       : title,
                 description : description,
@@ -117,7 +113,7 @@ async function funData(whatfun, moduleID, secModuleID, id, title, description, e
  * 
 ==================================================**/
 async function funShowData() {
-    data = await funData('get')
+    var data = await funData('get')
     //resets the table so there are only a header
     tableTitle = $('table').find('tr').eq(0)
     $('table').children().empty()
@@ -130,8 +126,8 @@ async function funShowData() {
                 <td>${element.id}</td>
                 <td>${funToSymbolsSwitch(element.title)}</td>
                 <td>${funToSymbolsSwitch(element.description.replace(/<\/?(p|ul|li)>/g, '').replace(/\n/g, '...'))}</td>
-                <td>${element.eta}</td>
                 <td>${element.time}</td>
+                <td>${element.eta}</td>
                 <td>${element.updateDate}</td>
             </tr>
         `)

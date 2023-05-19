@@ -1,20 +1,20 @@
 <?php
-	class projectTask_models extends CI_Model {
+    class userProject_models extends CI_Model {
 		/**==================================================
 		 * getTask
 		 * @param {String} $module
 		 * @return {Object}
 		==================================================**/
-		public function getTaskByProject($id) {
+		public function getProjectByUser($id) {
 			$result = $this->db->query("
 				SELECT
 					id,
-					projectID,
-					taskID
+					userID,
+					projectID
 				FROM
-					projectTask
+					userProject
 				WHERE
-					projectID = ?
+					userID = ?
 			", [$id]);
 
 			return $result->result_array();
@@ -25,16 +25,16 @@
 		 * @param {Number} $id
 		 * @return {Object}
 		==================================================**/
-		public function getProjectByTask($id) {
+		public function getUserByProject($id) {
 			$result = $this->db->query("
 				SELECT
 					id,
-					projectID,
-					taskID
+					userID,
+					projectID
 				FROM
-					projectTask
+					userProject
 				WHERE
-					taskID = ?
+					projectID = ?
 			", [$id]);
 			return $result->result_array();
 		}
@@ -45,17 +45,17 @@
 		 * @param {Number} $id
 		 * @return {Object}
 		==================================================**/
-		public function verifyProjectTask($moduleID, $id) {
+		public function verifyUserProject($moduleID, $id) {
 			$this->db->query("
 				SELECT
 					id,
-					projectID,
-					taskID
+					userID,
+					projectID
 				FROM
-					projectTask
+					userProject
 				WHERE
-					projectID = ? AND
-					taskID = ?
+					userID = ? AND
+					projectID = ?
 			", [$moduleID, $id]);
 			return ($this->db->affected_rows() > 0) ? true : false;
 		}
