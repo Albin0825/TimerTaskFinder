@@ -8,10 +8,21 @@ function funBaseUrl(assets) {
 
     //if you are not in a controller it forces you into a controller
     if(urlArray[urlArray.indexOf('index.php')+1] == '') {
-        window.location.replace(window.location.origin + urlArray.slice(0, urlArray.indexOf('timertaskfinder')+1).join('/') + '/' + 'index.php/main_controllers')
+        window.location.replace(window.location.origin + urlArray.slice(0, urlArray.indexOf('timertaskfinder')+1).join('/') + '/' + 'index.php/task_controllers')
     }
 
     return window.location.origin + urlArray.slice(0, indexOfSegment + (!assets ? 1 : -1)).join('/') + '/'
+}
+
+
+
+/**==================================================
+ * 
+ * @param {String} name - witch part of the hash you want to get
+ * @returns {String}
+==================================================**/
+function getHashQuery(name) {
+    return new URLSearchParams(window.location.hash.slice(1)).get(name)
 }
 
 
