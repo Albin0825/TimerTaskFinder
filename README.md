@@ -22,6 +22,7 @@ $config['base_url'] = 'http://localhost:8080/projects/timertaskfinder';
 ```sql
 --
 -- all the tables are not in use in the current build
+-- you need to create users manually through you db and you need at least one to make the project work
 --
 timertaskfinder
 ├ user
