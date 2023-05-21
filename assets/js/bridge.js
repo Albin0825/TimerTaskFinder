@@ -12,6 +12,7 @@ async function funsaveUpdate(inputID, time) {
 	
     //positions
     var data = (await funData('priority'))[0]
+	data = data ? data : {priority: 0}
     topPriority = parseInt(data.priority) + (parseInt(data.priority) == 0 ? 10 : 0)
     switch ($('#priority').val()) {
         case 'top':
@@ -90,6 +91,7 @@ async function funData(whatfun, formatedData = {}) {
             type: 'POST',
             data: {formatedData},
             success: function (data) {
+				console.log(data)
                 if(typeof JSON.parse(data) == 'boolean') {
                     if(JSON.parse(data) == true) {
                         funShowData()

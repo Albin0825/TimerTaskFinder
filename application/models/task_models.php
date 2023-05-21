@@ -225,13 +225,13 @@
                         DELETE FROM projectTask
                         WHERE
                             taskID = ?
-                    ", [$data['moduleID']]);
+                    ", [$data['id']]);
                 } else if($data['module'] == 'project') {
                     $this->db->query("
 						DELETE FROM projectTask
 						WHERE
 							projectID = ?
-                    ", [$data['moduleID']]);
+                    ", [$data['id']]);
                 } else {
                     $this->db->trans_rollback();
                 }

@@ -28,7 +28,7 @@ function getHashQuery(name) {
 
 
 /**==================================================
- * Switches between HTML entries and Unicode
+ * Switches between HTML entries and Unicode (encoding)
  * @param {String} input 
  * @returns {String}
 ==================================================**/
@@ -47,6 +47,11 @@ function funSymbolsToSwitch(input) {
     return result
 }
 
+/**==================================================
+ * Switches between HTML entries and Unicode (decoding)
+ * @param {String} input 
+ * @returns {String}
+==================================================**/
 function funToSymbolsSwitch(input) {
     converterType = 'Html' // 'Html' / 'Unicode' / ''
     result = ''
