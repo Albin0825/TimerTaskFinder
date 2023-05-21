@@ -2,10 +2,6 @@
 	defined('BASEPATH') OR exit('No direct script access allowed');
 	
 	class MY_projectTask_controllers extends CI_Controller {
-		public function __construct() {
-			parent::__construct();
-		}
-		
 		/**==================================================
 		 * helper
 		==================================================**/
@@ -15,17 +11,7 @@
 			$this->load->model('userProject_models');
 			$this->load->model('user_models');
 
-			$data = [];
-			$data['module']      = !empty($_POST['module'])      ? $_POST['module']      : null;;
-			$data['moduleID']    = !empty($_POST['moduleID'])    ? $_POST['moduleID']    : null;
-			$data['id']          = !empty($_POST['id'])          ? $_POST['id']          : null;
-			$data['title']       = !empty($_POST['title'])       ? $_POST['title']       : null;
-			$data['description'] = !empty($_POST['description']) ? $_POST['description'] : null;
-			$data['eta']         = !empty($_POST['eta'])         ? $_POST['eta']         : null;
-			$data['time']        = !empty($_POST['time'])        ? $_POST['time']        : 0;
-			$data['updateDate']  = !empty($_POST['updateDate'])  ? $_POST['updateDate']  : null;
-			$data['priority']    = !empty($_POST['priority'])    ? $_POST['priority']    : 0;
-			return $data;
+			return !empty($_POST['formatedData']) ? $_POST['formatedData'] : null;
 		}
 
 /**====================================================================================================
@@ -36,9 +22,7 @@
 		==================================================**/
         public function get() {
 			$helperData = $this->helper();
-			$data = $this->task_models->get(
-				$helperData['module']
-			);
+			$data = $this->task_models->get($helperData);
 
 			echo json_encode($data);
 		}
@@ -48,9 +32,7 @@
 		==================================================**/
         public function getOne() {
 			$helperData = $this->helper();
-			$data = $this->task_models->getOne(
-				$helperData['id']
-			);
+			$data = $this->task_models->getOne($helperData);
 
 			echo json_encode($data);
 		}
@@ -60,16 +42,7 @@
 		==================================================**/
         public function insert() {
 			$helperData = $this->helper();
-			$data = $this->task_models->insert(
-				$helperData['module'],
-				$helperData['title'],
-				$helperData['description'],
-				$helperData['eta'],
-				$helperData['time'],
-				$helperData['updateDate'],
-				$helperData['priority'],
-				$helperData['moduleID']
-			);
+			$data = $this->task_models->insert($helperData);
 
 			echo json_encode($data);
 		}
@@ -79,17 +52,7 @@
 		==================================================**/
         public function update() {
 			$helperData = $this->helper();
-			$data = $this->task_models->update(
-				$helperData['module'],
-				$helperData['id'],
-				$helperData['title'],
-				$helperData['description'],
-				$helperData['eta'],
-				$helperData['time'],
-				$helperData['updateDate'],
-				$helperData['priority'],
-				$helperData['moduleID']
-			);
+			$data = $this->task_models->update($helperData);
 
 			echo json_encode($data);
 		}
@@ -99,11 +62,7 @@
 		==================================================**/
         public function delete() {
 			$helperData = $this->helper();
-			$data = $this->task_models->delete(
-				$helperData['module'],
-				$helperData['moduleID'],
-				$helperData['id']
-			);
+			$data = $this->task_models->delete($helperData);
 
 			echo json_encode($data);
 		}
@@ -113,9 +72,7 @@
 		==================================================**/
         public function priority() {
 			$helperData = $this->helper();
-			$data = $this->task_models->priority(
-				$helperData['module']
-			);
+			$data = $this->task_models->priority($helperData);
 
 			echo json_encode($data);
 		}
@@ -128,9 +85,7 @@
 		==================================================**/
         public function getTaskByProject() {
 			$helperData = $this->helper();
-			$data = $this->projectTask_models->getTaskByProject(
-				$helperData['id']
-			);
+			$data = $this->projectTask_models->getTaskByProject($helperData);
 
 			echo json_encode($data);
 		}
@@ -140,9 +95,7 @@
 		==================================================**/
         public function getProjectByTask() {
 			$helperData = $this->helper();
-			$data = $this->projectTask_models->getProjectByTask(
-				$helperData['id']
-			);
+			$data = $this->projectTask_models->getProjectByTask($helperData);
 
 			echo json_encode($data);
 		}
@@ -152,10 +105,7 @@
 		==================================================**/
         public function verifyProjectTask() {
 			$helperData = $this->helper();
-			$data = $this->projectTask_models->verifyProjectTask(
-				$helperData['moduleID'],
-				$helperData['id']
-			);
+			$data = $this->projectTask_models->verifyProjectTask($helperData);
 
 			echo json_encode($data);
 		}
@@ -168,9 +118,7 @@
 		==================================================**/
         public function getProjectByUser() {
 			$helperData = $this->helper();
-			$data = $this->userProject_models->getProjectByUser(
-				$helperData['id']
-			);
+			$data = $this->userProject_models->getProjectByUser($helperData);
 
 			echo json_encode($data);
 		}
@@ -180,9 +128,7 @@
 		==================================================**/
         public function getUserByProject() {
 			$helperData = $this->helper();
-			$data = $this->userProject_models->getUserByProject(
-				$helperData['id']
-			);
+			$data = $this->userProject_models->getUserByProject($helperData);
 
 			echo json_encode($data);
 		}
@@ -192,10 +138,7 @@
 		==================================================**/
         public function verifyUserProject() {
 			$helperData = $this->helper();
-			$data = $this->userProject_models->verifyUserProject(
-				$helperData['moduleID'],
-				$helperData['id']
-			);
+			$data = $this->userProject_models->verifyUserProject($helperData);
 
 			echo json_encode($data);
 		}
@@ -208,9 +151,7 @@
 		==================================================**/
         public function verifyUser() {
 			$helperData = $this->helper();
-			$data = $this->user_models->verifyUser(
-				$helperData['id']
-			);
+			$data = $this->user_models->verifyUser($helperData);
 
 			echo json_encode($data);
 		}

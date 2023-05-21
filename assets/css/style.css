@@ -74,7 +74,9 @@ header > nav a:hover {
 TABLE
 ==================================================*/
 table {
+	table-layout: fixed;
     width: calc(100% - 60px);
+	white-space: nowrap;
     margin: 30px;
 }
 
@@ -87,7 +89,9 @@ table tr:nth-child(odd) {
 }
 
 table td {
+	overflow: hidden;
     height:2rem;
+	text-overflow: ellipsis;
     padding-left: 15px;
 }
 

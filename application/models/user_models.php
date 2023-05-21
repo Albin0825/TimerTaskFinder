@@ -2,10 +2,10 @@
     class user_models extends CI_Model {        
         /**==================================================
 		 * getOneTask
-		 * @param {Number} $id
+		 * @param {Object} $data
 		 * @return {Object}
 		==================================================**/
-        public function verifyUser($moduleID) {
+        public function verifyUser($data) {
             $result = $this->db->query("
                 SELECT
                     id,
@@ -14,7 +14,7 @@
                     user
                 WHERE
 					id = ?
-            ", [$moduleID]);
+            ", [$data['id']]);
             return $result->num_rows() != 0 ? true : false;
         }
     }

@@ -2,10 +2,10 @@
 	class projectTask_models extends CI_Model {
 		/**==================================================
 		 * getTask
-		 * @param {String} $module
+		 * @param {Object} $data
 		 * @return {Object}
 		==================================================**/
-		public function getTaskByProject($id) {
+		public function getTaskByProject($data) {
 			$result = $this->db->query("
 				SELECT
 					id,
@@ -15,17 +15,17 @@
 					projectTask
 				WHERE
 					projectID = ?
-			", [$id]);
+			", [$data['id']]);
 
 			return $result->result_array();
 		}
 
 		/**==================================================
 		 * getOneTask
-		 * @param {Number} $id
+		 * @param {Object} $data
 		 * @return {Object}
 		==================================================**/
-		public function getProjectByTask($id) {
+		public function getProjectByTask($data) {
 			$result = $this->db->query("
 				SELECT
 					id,
@@ -35,17 +35,16 @@
 					projectTask
 				WHERE
 					taskID = ?
-			", [$id]);
+			", [$data['id']]);
 			return $result->result_array();
 		}
 
 		/**==================================================
 		 * insertTask
-		 * @param {Number} $moduleID
-		 * @param {Number} $id
+		 * @param {Object} $data
 		 * @return {Object}
 		==================================================**/
-		public function verifyProjectTask($moduleID, $id) {
+		public function verifyProjectTask($data) {
 			$this->db->query("
 				SELECT
 					id,
@@ -56,7 +55,7 @@
 				WHERE
 					projectID = ? AND
 					taskID = ?
-			", [$moduleID, $id]);
+			", [$data['moduleID'], $data['id']]);
 			return ($this->db->affected_rows() > 0) ? true : false;
 		}
 	}

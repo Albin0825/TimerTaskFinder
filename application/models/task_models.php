@@ -2,14 +2,14 @@
     class task_models extends CI_Model {
         /**==================================================
 		 * getTask
-		 * @param {String} $module
+		 * @param {Object} $data
 		 * @return {Object}
 		==================================================**/
-        public function get($module) {
+        public function get($data) {
 			$from = '';
-			if($module == 'project') {
+			if($data['module'] == 'project') {
 				$from = 'userProject';
-			} else if ($module == 'task') {
+			} else if ($data['module'] == 'task') {
 				$from = 'projectTask';
 			}
 
@@ -26,7 +26,7 @@
 				WHERE
 					id IN (
 						SELECT
-							".$module."ID
+							".$data['module']."ID
 						FROM
 							".$from."
 					)
@@ -41,10 +41,10 @@
         
         /**==================================================
 		 * getOneTask
-		 * @param {Number} $id
+		 * @param {Object} $data
 		 * @return {Object}
 		==================================================**/
-        public function getOne($id) {
+        public function getOne($data) {
             $result = $this->db->query("
                 SELECT
                     title,
@@ -57,23 +57,16 @@
                     task
                 WHERE
                     id = ?
-            ", [$id]);
+            ", [$data['id']]);
             return $result->result_array();
         }
 
         /**==================================================
 		 * insertTask
-		 * @param {String} $module
-		 * @param {String} $title
-		 * @param {String} $description
-		 * @param {Number} $eta
-		 * @param {Number} $time
-		 * @param {Date} $updateDate
-		 * @param {Number} $priority
-		 * @param {Number} $moduleID - taskID or projectID
+		 * @param {Object} $data
 		 * @return {Object}
 		==================================================**/
-        public function insert($module, $title, $description, $eta, $time, $updateDate, $priority, $moduleID) {
+        public function insert($data) {
             $this->db->trans_start();
                 $this->db->query("
                     INSERT INTO task(
@@ -92,10 +85,10 @@
                         ?,
                         ?
                     )
-                ", [$title, $description, $eta, $time, $updateDate, $priority]);
+                ", [$data['title'], $data['description'], $data['eta'], $data['time'], $data['updateDate'], $data['priority']]);
 				$insertedTaskID = $this->db->insert_id();
 
-                if($module == 'task') {
+                if($data['module'] == 'task') {
                     $this->db->query("
                         INSERT INTO projectTask(
                             projectID,
@@ -105,8 +98,22 @@
                             ?,
                             ?
                         )
-                    ", [$moduleID, $insertedTaskID]);
-                } else if($module == 'project') {
+                    ", [$data['moduleID'], $insertedTaskID]);
+                    $this->db->query("
+						UPDATE task
+						SET
+							time = time + ?
+						WHERE
+							id = (
+								SELECT
+									projectID
+								FROM
+									projectTask
+								WHERE
+									taskID = ?
+							)
+                    ", [$data['addedHours'], $insertedTaskID]);
+                } else if($data['module'] == 'project') {
                     $this->db->query("
                         INSERT INTO userProject(
 							userID,
@@ -116,7 +123,7 @@
                             ?,
                             ?
                         )
-                    ", [$moduleID, $insertedTaskID]);
+                    ", [$data['moduleID'], $insertedTaskID]);
                 } else {
                     $this->db->trans_rollback();
                 }
@@ -129,16 +136,10 @@
         
         /**==================================================
 		 * updateTask
-		 * @param {Number} $id
-		 * @param {String} $title
-		 * @param {String} $description
-		 * @param {Number} $eta
-		 * @param {Number} $time
-		 * @param {Date} $updateDate
-		 * @param {Number} $priority
+		 * @param {Object} $data
 		 * @return {Boolean}
 		==================================================**/
-        public function update($module, $id, $title, $description, $eta, $time, $updateDate, $priority, $moduleID) {
+        public function update($data) {
 			$this->db->trans_start();
 				$this->db->query("
 					UPDATE task
@@ -151,9 +152,9 @@
 						priority    = ?
 					WHERE
 						id = ?
-				", [$title, $description, $eta, $time, $updateDate, $priority, $id]);
+				", [$data['title'], $data['description'], $data['eta'], $data['time'], $data['updateDate'], $data['priority'], $data['id']]);
 
-				if($module == 'task') {
+				if($data['module'] == 'task') {
                     $this->db->query("
 						UPDATE projectTask
 						SET
@@ -167,8 +168,22 @@
 								WHERE
 									taskID = ?
 							)
-                    ", [$moduleID, $id]);
-                } else if($module == 'project') {
+                    ", [$data['moduleID'], $data['id']]);
+                    $this->db->query("
+						UPDATE task
+						SET
+							time = time + ?
+						WHERE
+							id = (
+								SELECT
+									projectID
+								FROM
+									projectTask
+								WHERE
+									taskID = ?
+							)
+                    ", [$data['addedHours'], $data['id']]);
+                } else if($data['module'] == 'project') {
                     $this->db->query("
 						UPDATE userProject
 						SET
@@ -182,7 +197,7 @@
 								WHERE
 									projectID = ?
 							)
-                    ", [$moduleID, $id]);
+                    ", [$data['moduleID'], $data['id']]);
                 } else {
                     $this->db->trans_rollback();
                 }
@@ -195,30 +210,28 @@
         
         /**==================================================
 		 * deleteTask
-		 * @param {String} $module
-		 * @param {Number} $moduleID - taskID or projectID
-		 * @param {Number} $id
+		 * @param {Object} $data
 		 * @return {Boolean}
 		==================================================**/
-        public function delete($module, $moduleID, $id) {
+        public function delete($data) {
             $this->db->trans_start();
                 $this->db->query("
                     DELETE FROM task
                     WHERE
                         id = ?
-                ", [$id]);
-                if($module == 'task') {
+                ", [$data['id']]);
+                if($data['module'] == 'task') {
                     $this->db->query("
                         DELETE FROM projectTask
                         WHERE
                             taskID = ?
-                    ", [$moduleID]);
-                } else if($module == 'project') {
+                    ", [$data['moduleID']]);
+                } else if($data['module'] == 'project') {
                     $this->db->query("
 						DELETE FROM projectTask
 						WHERE
 							projectID = ?
-                    ", [$moduleID]);
+                    ", [$data['moduleID']]);
                 } else {
                     $this->db->trans_rollback();
                 }
@@ -231,10 +244,10 @@
 
         /**==================================================
 		 * priority
-		 * @param {String} $module
+		 * @param {Object} $data
 		 * @return {Object}
 		==================================================**/
-        public function priority($module) {
+        public function priority($data) {
             $result = $this->db->query("
 				SELECT
 					priority
@@ -243,7 +256,7 @@
 				WHERE
 					id IN (
 						SELECT
-							".$module."ID
+							".$data['module']."ID
 						FROM
 							projecttask
 					)
