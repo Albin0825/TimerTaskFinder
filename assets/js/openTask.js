@@ -1,23 +1,27 @@
+var data = {
+	title       : '',
+	description : '',
+}
+
 window.addEventListener("load", async (event) => {
     id   = await parseInt(getHashQuery('id'))
-    var data = {
-		title: '',
-		description: ''
-	}
     if(!isNaN(id)) {
 		/**==================================================
 		 * gets project/task information
 		==================================================**/
-		data = (await funData('getOne', null, id))[0]
+		formatedData = {
+			id : id, //projectID or taskID
+		}
+		data = (await funData('getOne', formatedData))[0]
 		
 		/**==================================================
 		 * gets parent information (project/user)
 		==================================================**/
 		if(await funBaseUrl().split('/').find(element => element.includes('controllers')) == 'project_controllers') {
-			result = (await funData('getUserByProject', null, id))[0]
+			result = (await funData('getUserByProject', formatedData))[0]
 			data['connection'] = result.userID
 		} else {
-			result = (await funData('getProjectByTask', null, id))[0]
+			result = (await funData('getProjectByTask', formatedData))[0]
 			data['connection'] = result.projectID
 		}
     } else {
@@ -28,7 +32,6 @@ window.addEventListener("load", async (event) => {
 	if(await funBaseUrl().split('/').find(element => element.includes('controllers')) == 'task_controllers') {
 		$('#connection').attr("placeholder", "ProjectID")
 	}
-	console.log(data)
 	/**==================================================
 	 * changes the color and width of the progress bar
 	==================================================**/
@@ -92,7 +95,7 @@ window.addEventListener("load", async (event) => {
  * Buttons
 ==================================================**/
 $('dialog button#delete').click(async function() {
-	CloseResult(await funData('delete', null, id))
+	CloseResult(await funData('delete', formatedData))
 })
 
 $('dialog button#close').click(function() {
@@ -100,11 +103,11 @@ $('dialog button#close').click(function() {
 })
 
 $('dialog button#saveAndClose').click(async function() {
-	CloseResult(await funsaveUpdate(id))
+	CloseResult(await funsaveUpdate(id, data['time']))
 })
 
 $('dialog button#save').click(function() {
-	funsaveUpdate(id)
+	funsaveUpdate(id, data['time'])
 })
 
 

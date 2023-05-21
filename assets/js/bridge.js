@@ -3,7 +3,7 @@
  * @param {number} inputID - what task you are on
  * @returns {Boolean}
 ==================================================**/
-async function funsaveUpdate(inputID) {
+async function funsaveUpdate(inputID, time) {
 	method = isNaN(inputID) ? 'insert'                            : 'update'
     text   = isNaN(inputID) ? 'title, text and priority is empty' : 'you did not change anything'
 	
@@ -12,6 +12,7 @@ async function funsaveUpdate(inputID) {
 	
     //positions
     var data = (await funData('priority'))[0]
+	data = data ? data : {priority: 0}
     topPriority = parseInt(data.priority) + (parseInt(data.priority) == 0 ? 10 : 0)
     switch ($('#priority').val()) {
         case 'top':
@@ -31,19 +32,39 @@ async function funsaveUpdate(inputID) {
             break;
     }
 
+	/**==================================================
+	 * verify if user or project exist
+	==================================================**/
 	if(await funBaseUrl().split('/').find(element => element.includes('controllers')) == 'project_controllers') {
 		connectionType = 'verifyUser';
 	} else {
 		connectionType = 'getOne';
 	}
-	connection = await funData(connectionType, null, $('#connection').val())
+
+	formatedData = {
+		id: parseInt($('#connection').val()) // project: userID | task: projectID
+	}
+
+	connection = await funData(connectionType, formatedData)
 	if(connection == false) {
 		return false
 	}
-	moduleID = parseInt($('#connection').val())  // project: userID | task: projectID
 	
-    //send or update data
-    result = await funData(method, moduleID, inputID, $('#title').val(), CKEDITOR.instances['description'].getData(), $('#eta').val(), $('#time').val(), standardizedDate, priority)
+    /**==================================================
+	 * inserts or updates data
+	==================================================**/
+	formatedData = {
+		moduleID    : parseInt($('#connection').val()), // project: userID | task: projectID
+		id          : inputID, //projectID or taskID
+		title       : $('#title').val(),
+		description : CKEDITOR.instances['description'].getData(),
+		eta         : $('#eta').val(),
+		time        : $('#time').val(),
+		updateDate  : standardizedDate,
+		priority    : priority,
+		addedHours  : parseInt($('#time').val()) - time
+	}
+    result = await funData(method, formatedData)
     if(result == false) {
         alert(`Failed to send.\n\nEther ${text} or it did not come through.`)
     }
@@ -54,39 +75,23 @@ async function funsaveUpdate(inputID) {
 
 /**==================================================
  * 
- * @param {Object} whatfun     - witch function you want to go to for example, get, getOne, insert
- * @param {String} moduleID    - userID or projectID
- * @param {Number} id          - used if you want to get one/update/delete a task
- * @param {String} title       - ┐
- * @param {String} description - ┤
- * @param {String} eta         - ┤
- * @param {String} time        - ┤
- * @param {Number} updateDate  - ┤
- * @param {Number} priority    - ┴ used if you want to insert/update a task
+ * @param {String} whatfun      - witch function you want to go to for example, get, getOne, insert
+ * @param {Object} formatedData - all elemets that is needed to do the task
  * @returns {Boolean|Object}   - boolean: insert, update and delete. object: select.
 ==================================================**/
-async function funData(whatfun, moduleID, id, title, description, eta, time, updateDate, priority) {
-	module = await funBaseUrl().split('/').find(element => element.includes('controllers')).split('_')[0]
-    if(title && description) {
-        title       = await funSymbolsToSwitch(title)
-        description = await funSymbolsToSwitch(description)
+async function funData(whatfun, formatedData = {}) {
+	formatedData['module'] = await funBaseUrl().split('/').find(element => element.includes('controllers')).split('_')[0]
+    if(formatedData && formatedData['title'] && formatedData['description']) {
+        formatedData['title']       = await funSymbolsToSwitch(formatedData['title'])
+        formatedData['description'] = await funSymbolsToSwitch(formatedData['description'])
     }
     return new Promise((resolve, reject) => {
         $.ajax({
             url: `${funBaseUrl()}${whatfun}`,
             type: 'POST',
-            data: {
-				module      : module,
-                moduleID    : moduleID,
-                id          : id,
-                title       : title,
-                description : description,
-                eta         : eta,
-                time        : time,
-                updateDate  : updateDate,
-                priority    : priority
-            },
+            data: {formatedData},
             success: function (data) {
+				console.log(data)
                 if(typeof JSON.parse(data) == 'boolean') {
                     if(JSON.parse(data) == true) {
                         funShowData()
@@ -125,7 +130,7 @@ async function funShowData() {
             <tr data-id="${element.id}">
                 <td>${element.id}</td>
                 <td>${funToSymbolsSwitch(element.title)}</td>
-                <td>${funToSymbolsSwitch(element.description.replace(/<\/?(p|ul|li)>/g, '').replace(/\n/g, '...'))}</td>
+                <td>${funToSymbolsSwitch(element.description.replace(/<\/?\w+(\s[^>]*)?>/g, ''))}</td>
                 <td>${element.time}</td>
                 <td>${element.eta}</td>
                 <td>${element.updateDate}</td>
